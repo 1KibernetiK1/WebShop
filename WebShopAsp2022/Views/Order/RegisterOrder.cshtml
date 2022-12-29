@@ -1,0 +1,52 @@
+﻿@model WebShopAsp2022.Models.RegisterOrderViewModel
+
+@{
+    ViewData["Title"] = "RegisterOrder";
+}
+
+<h1>RegisterOrder</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <h4>Ваш заказ: </h4>
+        @foreach (var record in Model.Records)
+        {
+            <dl class="row">
+                <dd class = "col-sm-12">
+                    
+                    <img width="100" height="100" 
+                        src="~/ProductImages/@record.Product.ImageUrl"/>
+                    @record.Product.Name, (@record.Quantity шт) [@record.Cost.ToString("c")]
+                </dd>
+            </dl>
+        }
+
+
+        <form asp-action="RegisterOrder">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" disabled/>
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PostAddress" class="control-label"></label>
+                <input asp-for="PostAddress" class="form-control" />
+                <span asp-validation-for="PostAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContactPhone" class="control-label"></label>
+                <input asp-for="ContactPhone" class="form-control" />
+                <span asp-validation-for="ContactPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Подтвердить Заказ" class="btn btn-primary" />
+            </div>
+        </form>
+
+        
+    </div>
+</div>
+

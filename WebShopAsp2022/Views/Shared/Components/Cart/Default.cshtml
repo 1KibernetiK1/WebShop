@@ -1,0 +1,24 @@
+﻿@model WebShopAsp2022.BusinessLogic.Cart
+
+@{
+    string pathAndQuery = 
+    Context.Request.Path + 
+    Context.Request.QueryString;
+}
+
+@if (Model.ProductCount > 0)
+{
+    <a class="btn btn-light"
+        asp-action="CartView" 
+        asp-controller="Product"
+        asp-route-urlReturn="@pathAndQuery"
+        >
+        <span class="material-symbols-outlined">
+        shopping_cart_checkout
+        </span>
+         (@Model.TotalCost.ToString("c"))
+         [@Model.ProductCount]
+    </a>    
+}
+
+

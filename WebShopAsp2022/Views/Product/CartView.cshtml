@@ -1,0 +1,82 @@
+﻿@model WebShopAsp2022.BusinessLogic.Cart
+
+@{
+    ViewData["Title"] = "КОРЗИНА";
+
+    string pathAndQuery =
+            Context.Request.Path +
+            Context.Request.QueryString;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Наименование товара</th>
+                <th>Цена</th>
+                <th>Количество</th>
+                <th>Стоимость</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var record in Model.Records)
+            {
+                <tr>
+                    <td>@record.Product.Name</td>
+                    <td>@record.Product.Price.ToString("c")</td>
+
+                    <td>
+                        <div class="btn-group">
+
+                            <a class="btn btn-light"
+                                asp-action="DecreaseProduct"
+                                asp-controller="Product"
+                                asp-route-urlReturn="@pathAndQuery"
+                                asp-route-id="@record.Product.ProductId">
+                                -
+                            </a>
+
+                            <button class="btn btn-light">
+                                @record.Quantity
+                            </button>
+
+                            <a class="btn btn-light"
+                                asp-action="IncreaseProduct"
+                                asp-controller="Product"
+                                asp-route-urlReturn="@pathAndQuery"
+                                asp-route-id="@record.Product.ProductId"
+                            >
+                                +
+                            </a>
+                        </div>
+                    </td>
+
+                    <td>
+                        @record.Cost.ToString("c")
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="3">ИТОГО:</td>
+                <td> @Model.TotalCost.ToString("c") </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a 
+        class="btn btn-light float-left"
+        href="@ViewBag.UrlReturn">
+        Продолжить покупки
+    </a>
+
+    <a 
+        asp-controller="Order"
+        asp-action="RegisterOrder"
+        class="btn btn-success float-right"
+        >
+        Оформить заказ
+    </a>
+</div>
+

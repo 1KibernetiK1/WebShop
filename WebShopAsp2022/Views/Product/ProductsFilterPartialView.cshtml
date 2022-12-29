@@ -1,0 +1,48 @@
+﻿@model WebShopAsp2022.Models.ProductsFilterModel
+
+<h4>Фильтры товаров</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ProductsFilterApply">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProductName" class="control-label"></label>
+                <input asp-for="ProductName" class="form-control" />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MinPrice" class="control-label"></label>
+                <input asp-for="MinPrice" class="form-control" />
+                <span asp-validation-for="MinPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxPrice" class="control-label"></label>
+                <input asp-for="MaxPrice" class="form-control" />
+                <span asp-validation-for="MaxPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SelectedBrandId" class="control-label"></label>
+                <select 
+                    asp-for="SelectedBrandId" 
+                    asp-items="@Model.ListBrands">
+                    <option>@Model.Brand</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit"
+                    value="Применить" 
+                    class="btn btn-primary" />
+                <a class="btn btn-danger"
+                    asp-action="ProductsFilterReset">
+                    Сбросить
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,107 @@
+﻿@using WebShopAsp2022.Helpers;
+@model WebShopAsp2022.Models.ProductsPageModel
+
+@{
+    string pathAndQuery =
+            Context.Request.Path +
+            Context.Request.QueryString;
+
+    string title = Model.CategoryName == null
+        ? "Товары"
+        : $"Товары ({Model.CategoryName} )";
+
+    ViewData["Title"] = title + $"кол-во [{Model.TotalProductsQuantity}]";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<p>
+  <button class="btn btn-light" type="button" 
+  data-toggle="collapse" 
+  data-target="#collapseExample" 
+  aria-expanded="false" 
+  aria-controls="collapseExample">
+    Поиск и фильтры
+  </button>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body">
+      <partial name="ProductsFilterPartialView"
+          model="@Model.ProductsFilters"/>
+  </div>
+</div>
+
+<p>
+
+</p>
+
+<!-- 3) шаг -добавили ссылки на страницы -->
+<!-- 
+<div class="pagination">
+    <a href="/Products/Page1">1</a>
+    <a href="/Products/Page2">2</a>
+    <a href="/Products/Page3">3</a>
+    <a href="/Products/Page4">4</a>
+    <a href="/Products/Page5">5</a>
+    <a href="/Products/Page6">6</a>
+</div>
+-->
+
+@Html.PaginationBootstrap(Model)
+
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductsForPage.First().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductsForPage.First().Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ProductsForPage) {
+        <tr>
+            <td>
+                <!-- Html.DisplayFor(modelItem => item.Name) -->
+                 @Html.ActionLink(
+                     item.Name, 
+                     "ProductDetailsView",
+                     "Product",
+                     new { id = item.ProductId })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @if (User.IsInRole("ContentManager"))
+                {
+                    <a 
+                        asp-action="EditProductView"
+                        asp-controller="ContentManager"
+                        asp-route-id="@item.ProductId"
+                        asp-route-urlReturn="@pathAndQuery"
+                        class="btn btn-success">
+                        Изменить
+                    </a> 
+                } else
+                {
+                    <a 
+                        asp-action="AddToCart"
+                        asp-controller="Product"
+                        asp-route-id="@item.ProductId"
+                        asp-route-urlReturn="@pathAndQuery"
+                        class="btn btn-light">
+                        Купить
+                    </a>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@Html.PaginationBootstrap(Model)

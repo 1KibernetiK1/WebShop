@@ -1,0 +1,42 @@
+﻿@model IEnumerable<WebShopAsp2022.Domains.Category>
+
+@{
+    ViewData["Title"] = "Редактирование категорий";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    <a asp-action="AddCategory" class="btn-success">
+       Добавить новую категорию
+    </a>
+</p>
+<table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Изменить", "EditCategory", new { id=item.CategoryId }) |
+                @Html.ActionLink("Удалить", "DeleteCategory", new { id=item.CategoryId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

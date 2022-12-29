@@ -1,0 +1,33 @@
+﻿@model WebShopAsp2022.BusinessLogic.OrderTransactionResult
+
+@{
+    ViewData["Title"] = @Model.Message;
+}
+
+<div>
+    <div class="card">
+        <div class="card-header">
+        @Model.Message
+    </div>
+      <div class="card-body">
+        <h5 class="card-title">
+            Уважаемый покупатель, 
+            @Model.User?.FirstName
+            @Model.User?.LastName,
+            спасибо что выбрали Нас!
+        </h5>
+        <p class="card-text">
+            Ваш заказ Номер N @Model.Order.OrderId,
+            будет доставлен по адресу '@Model.Order.DeliveryAddress'
+            наш менеджер свяжется с вами по телефону [@Model.Order.ContactPhone]
+        </p>
+        <a class="btn btn-primary"
+        asp-controller="Product"
+        asp-action="ListView">
+            Продолжить покупки
+        </a>
+      </div>
+    </div>
+    
+</div>
+
